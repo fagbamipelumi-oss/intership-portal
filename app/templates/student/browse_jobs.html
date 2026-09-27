@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Browse Jobs{% endblock %}
+{% block content %}
+<h2 class="mb-4">Browse Jobs</h2>
+
+<div class="filter-bar">
+    <form method="GET" class="row g-3 align-items-end">
+        <div class="col-md-4">
+            <label class="form-label">Keyword</label>
+            <input type="text" name="q" class="form-control" placeholder="Job title or keyword" value="{{ request.args.get('q', '') }}">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Location</label>
+            <input type="text" name="location" class="form-control" placeholder="City or remote" value="{{ request.args.get('location', '') }}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Type</label>
+            <select name="job_type" class="form-select">
+                <option value="">Any type</option>
+                <option value="internship" {% if request.args.get('job_type') == 'internship' %}selected{% endif %}>Internship</option>
+                <option value="full-time" {% if request.args.get('job_type') == 'full-time' %}selected{% endif %}>Full-time</option>
+                <option value="part-time" {% if request.args.get('job_type') == 'part-time' %}selected{% endif %}>Part-time</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <button type="submit" class="btn btn-primary w-100">Go</button>
+        </div>
+    </form>
+</div>
+
+{% if jobs %}
+<div class="ledger">
+    {% for job in jobs %}
+    <div class="ledger-row">
+        <div class="ledger-main">
+            <div class="ledger-title">
+                <a href="{{ url_for('student.job_detail', job_id=job.id) }}">{{ job.title }}</a>
+            </div>
+            <div class="ledger-meta">{{ job.employer.company_name }} · {{ job.location or "Remote" }} · {{ job.job_type }}</div>
+        </div>
+        <div class="ledger-action">
+            <a href="{{ url_for('student.job_detail', job_id=job.id) }}" class="btn btn-sm btn-outline-primary">View &amp; Apply</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p class="mb-0">No jobs match your search.</p>
+</div>
+{% endif %}
+{% endblock %}

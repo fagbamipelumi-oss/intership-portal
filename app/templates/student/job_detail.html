@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }}{% endblock %}
+{% block content %}
+<div class="job-header">
+    <h2 class="job-title">{{ job.title }}</h2>
+    <div class="job-meta-line">
+        {{ job.employer.company_name }}
+        <span class="sep">·</span>{{ job.location or "Remote" }}
+        <span class="sep">·</span>{{ job.job_type|capitalize }}
+    </div>
+</div>
+
+<div class="job-section-label">Description</div>
+<div class="job-body">{{ job.description }}</div>
+
+{% if job.required_skills or job.qualifications or job.deadline %}
+<div class="job-facts">
+    {% if job.required_skills %}
+    <div class="job-fact">
+        <span class="job-fact-label">Required skills</span>
+        <span>{{ job.required_skills | join(', ') }}</span>
+    </div>
+    {% endif %}
+    {% if job.qualifications %}
+    <div class="job-fact">
+        <span class="job-fact-label">Qualifications</span>
+        <span>{{ job.qualifications }}</span>
+    </div>
+    {% endif %}
+    {% if job.deadline %}
+    <div class="job-fact">
+        <span class="job-fact-label">Deadline</span>
+        <span>{{ job.deadline.strftime('%Y-%m-%d') }}</span>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="apply-bar">
+    <form method="POST">
+        <button type="submit" class="btn btn-success">Apply Now</button>
+    </form>
+</div>
+{% endblock %}

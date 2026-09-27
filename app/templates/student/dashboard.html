@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<h2>Welcome, {{ student.first_name }}</h2>
+
+<h5 class="mt-4 mb-2">Recommended For You</h5>
+{% if cv_required %}
+<div class="alert alert-warning">
+    <strong>Upload your CV to unlock job recommendations and browsing.</strong>
+    <a href="{{ url_for('student.profile') }}" class="alert-link">Go to your profile</a> to upload one.
+</div>
+{% elif recommended_jobs %}
+<div class="ledger">
+    {% for job, match_pct in recommended_jobs %}
+    <div class="ledger-row">
+        <div class="ledger-main">
+            <div class="ledger-title">
+                <a href="{{ url_for('student.job_detail', job_id=job.id) }}">{{ job.title }}</a>
+            </div>
+            <div class="ledger-meta">{{ job.employer.company_name }} · {{ job.location or "Remote" }}</div>
+            <span class="mock-match">{{ match_pct }}% match</span>
+        </div>
+        <div class="ledger-action">
+            <a href="{{ url_for('student.job_detail', job_id=job.id) }}" class="btn btn-sm btn-outline-primary">View</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p class="mb-0">No recommendations yet — complete your profile to get matched.</p>
+</div>
+{% endif %}
+
+<h5 class="mt-5 mb-2">Your Applications</h5>
+{% if applications %}
+<div class="ledger">
+    {% for app in applications %}
+    <div class="ledger-row">
+        <div class="ledger-main">
+            <div class="ledger-title">{{ app.job.title }}</div>
+            <div class="ledger-meta">Applied {{ app.applied_at.strftime('%Y-%m-%d') }}</div>
+        </div>
+        <div class="ledger-action">
+            {% if app.status == 'shortlisted' %}
+                <span class="badge bg-success">{{ app.status }}</span>
+            {% elif app.status == 'rejected' %}
+                <span class="badge bg-danger">{{ app.status }}</span>
+            {% else %}
+                <span class="badge bg-secondary">{{ app.status }}</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p class="mb-0">You haven't applied to any jobs yet.</p>
+</div>
+{% endif %}
+{% endblock %}

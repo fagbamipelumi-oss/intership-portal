@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Moderate Jobs{% endblock %}
+{% block content %}
+<p class="page-eyebrow">Content moderation</p>
+<h2 class="mb-3">Job Postings</h2>
+<div class="table-toolbar">
+    <span></span>
+    <span class="count">{{ jobs | length }} total</span>
+</div>
+<table class="table">
+    <thead><tr><th>Title</th><th>Company</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    {% for job in jobs %}
+        <tr>
+            <td>{{ job.title }}</td>
+            <td>{{ job.employer.company_name }}</td>
+            <td><span class="badge bg-{{ 'danger' if job.status == 'flagged' else 'success' }}">{{ job.status }}</span></td>
+            <td>
+                <form method="POST" action="{{ url_for('admin.flag_job', job_id=job.id) }}">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                        {{ 'Unflag' if job.status == 'flagged' else 'Flag' }}
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="4" class="text-muted">No jobs posted yet.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

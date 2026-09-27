@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<p class="page-eyebrow">Your profile</p>
+<h2 class="mb-4">My Profile</h2>
+<div class="form-panel">
+    <form method="POST" enctype="multipart/form-data">
+
+        <div class="form-section-title">Personal Details</div>
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" name="first_name" class="form-control" value="{{ student.first_name }}">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" name="last_name" class="form-control" value="{{ student.last_name }}">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Bio</label>
+            <textarea name="bio" class="form-control" rows="3">{{ student.bio or '' }}</textarea>
+        </div>
+
+        <div class="form-section-title">Academic Background</div>
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">Course of Study</label>
+                <input type="text" name="course" class="form-control" value="{{ student.course or '' }}">
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">CGPA</label>
+                <input type="number" step="0.01" min="0" max="5" name="cgpa" class="form-control" value="{{ student.cgpa or '' }}">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Qualifications</label>
+            <textarea name="qualifications" class="form-control" rows="2"
+                      placeholder="Certifications, degrees, achievements">{{ student.qualifications or '' }}</textarea>
+        </div>
+
+        <div class="form-section-title">Skills &amp; Career</div>
+        <div class="mb-3">
+            <label class="form-label">Skills (comma-separated)</label>
+            <input type="text" name="skills" class="form-control"
+                   value="{{ student.skills | join(', ') if student.skills else '' }}"
+                   placeholder="Python, Django, SQL">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Experience</label>
+            <textarea name="experience" class="form-control" rows="2"
+                      placeholder="Prior internships, jobs, or projects">{{ student.experience or '' }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Career Interests</label>
+            <input type="text" name="interests" class="form-control"
+                   value="{{ student.interests or '' }}" placeholder="e.g. Web Development, Data Science">
+        </div>
+
+        <div class="form-section-title">Documents</div>
+        <div class="mb-3">
+            <label class="form-label">Upload CV (PDF or DOCX)</label>
+            <input type="file" name="cv" class="form-control" accept=".pdf,.docx">
+            {% if student.cv_file_path %}
+                <div class="form-text">Current file on record.</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">Save Profile</button>
+    </form>
+</div>
+{% endblock %}

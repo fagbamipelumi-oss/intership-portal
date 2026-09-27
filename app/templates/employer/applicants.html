@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Applicants — {{ job.title }}{% endblock %}
+{% block content %}
+<p class="page-eyebrow">Reviewing applicants</p>
+<h2 class="mb-4">{{ job.title }}</h2>
+
+{% if applications %}
+<div class="ledger">
+    {% for app in applications %}
+    <div class="ledger-row">
+        <div class="ledger-main">
+            <div class="ledger-title">{{ app.student.first_name }} {{ app.student.last_name }}</div>
+            <div class="ledger-meta">
+                {{ app.student.course or "No course listed" }}
+                <span class="sep">·</span>CGPA {{ app.student.cgpa or "—" }}
+                <span class="sep">·</span>{{ app.student.skills | join(', ') if app.student.skills else "No skills listed" }}
+            </div>
+            <div class="ledger-tags">
+                {% if app.status == 'shortlisted' %}
+                    <span class="badge bg-success">{{ app.status }}</span>
+                {% elif app.status == 'rejected' %}
+                    <span class="badge bg-danger">{{ app.status }}</span>
+                {% else %}
+                    <span class="badge bg-secondary">{{ app.status }}</span>
+                {% endif %}
+                {% if app.student.cv_file_path %}
+                    <a href="{{ url_for('employer.download_cv', student_id=app.student.id) }}" class="btn btn-sm btn-outline-secondary">Download CV</a>
+                {% else %}
+                    <span class="tag-muted">No CV uploaded</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="ledger-action">
+            <form method="POST" action="{{ url_for('employer.update_application_status', application_id=app.id) }}">
+                <select name="status" class="form-select form-select-sm">
+                    {% for s in ['pending', 'reviewed', 'shortlisted', 'rejected'] %}
+                    <option value="{{ s }}" {% if app.status == s %}selected{% endif %}>{{ s|capitalize }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p class="mb-0">No applicants yet.</p>
+</div>
+{% endif %}
+{% endblock %}

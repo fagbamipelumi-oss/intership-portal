@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<p class="page-eyebrow">System overview</p>
+<h2 class="mb-4">Admin Dashboard</h2>
+<div class="row g-3">
+    {% for label, value, accent in [
+        ("Total Users", stats.total_users, "navy"),
+        ("Students", stats.total_students, "gold"),
+        ("Employers", stats.total_employers, "navy"),
+        ("Jobs Posted", stats.total_jobs, "gold"),
+        ("Applications", stats.total_applications, "navy"),
+        ("Shortlisted", stats.shortlisted, "gold")
+    ] %}
+    <div class="col-6 col-md-4 col-lg-2">
+        <div class="stat-card accent-{{ accent }}">
+            <div class="stat-value">{{ value }}</div>
+            <div class="stat-label">{{ label }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
