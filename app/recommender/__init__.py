@@ -3,4 +3,4 @@
 # collaborative.py -> KNN over the student-job interaction matrix
 # hybrid.py        -> combines both into a ranked recommendation list
 #
-# Not yet implemented — this is the next phase of the build.
+# Wired into student.dashboard() via hybrid.get_recommendations().

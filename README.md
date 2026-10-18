@@ -5,16 +5,18 @@ hybrid recommendation and resume-parsing components.
 
 ## Status
 
-**Phase 1 (Database) and Phase 2/3 (Backend + Frontend skeleton) are done.**
-This gets you: registration/login for students, employers, and admin;
-student profile + CV upload (parsing not wired in yet); job posting and
-browsing; applying; application status tracking; basic admin analytics
-and moderation.
+**Phases 1-4 are done.** This gets you: registration/login for
+students, employers, and admin; student profile + CV upload (parsing
+not wired in yet); job posting and browsing; applying; application
+status tracking; basic admin analytics and moderation; and a hybrid
+recommendation engine (`app/recommender/`) that ranks open jobs for
+each student on their dashboard, combining TF-IDF content-based
+similarity on skills/description with KNN collaborative filtering over
+logged view/save/apply interactions.
 
-**Not yet built:** Phase 4 (recommendation engine), Phase 5 (resume
-parsing with NLTK), Phase 6 (tests). `app/recommender/` is scaffolded
-but empty — student dashboards currently show the 5 most recent open
-jobs instead of a personalized ranking.
+**Not yet built:** Phase 5 (resume parsing with NLTK — CV uploads are
+stored but skills must still be entered manually), Phase 6 (automated
+tests).
 
 ## Setup (SQLite — default, no database install needed)
 

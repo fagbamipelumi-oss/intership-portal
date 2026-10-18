@@ -513,9 +513,41 @@ a:hover {
    ============================================================ */
 .site-footer {
   border-top: 3px solid var(--gold);
-  padding: 2rem 0;
+  padding: 3rem 0 2rem;
   margin-top: 2rem;
-  background-color: var(--ink);
+  background-color: var(--navy-dark);
+}
+
+.site-footer .footer-eyebrow {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 0.4rem;
+}
+
+.site-footer .footer-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #FFFFFF;
+  margin-bottom: 0.75rem;
+}
+
+.site-footer .footer-text {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.site-footer .footer-text a {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+.site-footer .footer-text a:hover {
+  color: var(--gold-soft);
 }
 
 .site-footer .footer-brand {
@@ -524,10 +556,12 @@ a:hover {
   color: #FFFFFF;
 }
 
-.site-footer p {
-  color: #D8D4C6;
+.site-footer .footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.site-footer .footer-bottom .footer-text {
   font-size: 0.85rem;
-  margin-bottom: 0;
 }
 
 /* ============================================================
